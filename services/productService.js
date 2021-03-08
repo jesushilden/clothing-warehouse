@@ -13,11 +13,11 @@ exports.getProducts = async (category) => {
 
     const formattedProducts = products.map(product => {
         const availabilityIndex = uniqueManufacturers.indexOf(product.manufacturer)
-        const availability = availabilities[availabilityIndex].find(availability => availability.id === product.id.toUpperCase())
+        const productAvailability = availabilities[availabilityIndex].find(availability => availability.id === product.id.toUpperCase())
 
         return {
             ...product,
-            availability: availability.DATAPAYLOAD.AVAILABILITY.INSTOCKVALUE[0]
+            availability: productAvailability.DATAPAYLOAD.AVAILABILITY.INSTOCKVALUE[0]
         }
     })
 
