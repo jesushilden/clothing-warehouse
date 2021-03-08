@@ -8,7 +8,7 @@ const Navigation = ({ routes }) => {
 
     return (
         <div className='Navigation' >
-            {routes.map(route => <Link to={route} className={getClassName(route)}>{route}</Link>)}
+            {routes.map(route => <Link to={route} className={getClassName(route)} key={route}>{route}</Link>)}
         </div>
     )
 }

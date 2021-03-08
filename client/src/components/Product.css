@@ -1,0 +1,26 @@
+.Product {
+    display: flex;
+}
+
+.ProductInfoColumn {
+    flex: 1;
+    padding: 5px 0;
+}
+
+.ProductAvailabilityColumn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 130px;
+}
+
+.ProductName {
+    font-weight: bold;
+}
+
+.ProductColor {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border: 1px solid black;
+}

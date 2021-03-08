@@ -6,6 +6,6 @@ const getProducts = async (category) => {
     return response.data
 }
 
-export default {
-    getProducts
-}
+const productService = { getProducts }
+
+export default productService

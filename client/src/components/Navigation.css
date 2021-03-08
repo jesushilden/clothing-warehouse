@@ -5,6 +5,9 @@
     text-transform: uppercase;
     display: flex;
     justify-content: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
 }
 
 .Link {

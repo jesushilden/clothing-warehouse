@@ -1,0 +1,9 @@
+
+.ProductSeparator {
+    height: 0.5px;
+    background: black;
+}
+
+.ProductSeparator:last-of-type {
+    display: none;
+}

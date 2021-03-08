@@ -11,7 +11,7 @@ const App = () => {
       <Router>
         <Navigation routes={routes} />
         <Switch>
-          {routes.map(route => <Route exact path={`/${route}`} render={() => <Products category={route} />} />)}
+          {routes.map(route => <Route exact path={`/${route}`} render={() => <Products category={route} />} key={route} />)}
         </Switch>
       </Router>
     </div>

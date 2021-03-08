@@ -1,0 +1,21 @@
+.ProductLoader {
+    height: 75px;
+    background-color: lightgrey;
+    border-radius: 5px;
+    margin: 10px;
+    animation-name: color;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes color {
+    0% {
+      background-color: transparent;
+    }
+    50% {
+      background-color: lightgrey;
+    }
+    100% {
+      background-color: transparent;
+    }
+  }
