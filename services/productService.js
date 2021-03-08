@@ -11,5 +11,15 @@ exports.getProducts = async (category) => {
     const availabilityPromises = uniqueManufacturers.map(manufacturer => availabilityService.getAvailability(manufacturer))
     const availabilities = await Promise.all(availabilityPromises)
 
-    return products
+    const formattedProducts = products.map(product => {
+        const availabilityIndex = uniqueManufacturers.indexOf(product.manufacturer)
+        const availability = availabilities[availabilityIndex].find(availability => availability.id === product.id.toUpperCase())
+
+        return {
+            ...product,
+            availability: availability.DATAPAYLOAD.AVAILABILITY.INSTOCKVALUE[0]
+        }
+    })
+
+    return formattedProducts
 }
