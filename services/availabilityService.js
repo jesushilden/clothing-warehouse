@@ -9,10 +9,13 @@ exports.getAvailability = async (manufacturer, attempts = 0) => {
         return this.getAvailability(manufacturer, attempts + 1)
     }
 
-    const formattedAvailabilityPromises = availability.map(async item => ({
-        id: item.id,
-        DATAPAYLOAD: await xml2js.parseStringPromise(item.DATAPAYLOAD)
-    }))
+    const formattedAvailabilityPromises = availability.map(async item => {
+        const DATAPAYLOAD = await xml2js.parseStringPromise(item.DATAPAYLOAD)
+        return {
+            id: item.id,
+            availability: DATAPAYLOAD.AVAILABILITY.INSTOCKVALUE[0]
+        }
+    })
 
 
     const formattedAvailability = await Promise.all(formattedAvailabilityPromises)
