@@ -12,32 +12,46 @@ const Products = ({ category }) => {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const productsOfCategory = await productService.getProducts(category)
+            let productsOfCategory = await productService.getProducts(category)
             setProducts(productsOfCategory)
             setLoading(false)
 
             const manufacturers = productsOfCategory.map(product => product.manufacturer)
             const uniqueManufacturers = [...new Set(manufacturers)]
-            const availabilityPromises = uniqueManufacturers.map(async manufacturer => {
+            uniqueManufacturers.map(async manufacturer => {
                 try {
-                    return await availabilityService.getAvailability(manufacturer)
+                    const manufacturerAvailability = await availabilityService.getAvailability(manufacturer)
+
+                    const productsWithAvailability = productsOfCategory.map(product => {
+                        if (product.manufacturer !== manufacturer) return product
+
+                        const productAvailability = manufacturerAvailability.find(availability => availability.id === product.id.toUpperCase())
+
+                        return {
+                            ...product,
+                            availability: productAvailability.availability
+                        }
+                    })
+
+                    productsOfCategory = productsWithAvailability
+
+                    setProducts(productsOfCategory)
                 } catch (exception) {
-                    return []
+
+                    const productsWithFailedAvailability = productsOfCategory.map(product => {
+                        if (product.manufacturer !== manufacturer) return product
+
+                        return {
+                            ...product,
+                            availability: 'FAILED'
+                        }
+                    })
+
+                    productsOfCategory = productsWithFailedAvailability
+
+                    setProducts(productsOfCategory)
                 }
             })
-            const availabilities = await Promise.all(availabilityPromises)
-
-            const productsWithAvailability = productsOfCategory.map(product => {
-                const availabilityIndex = uniqueManufacturers.indexOf(product.manufacturer)
-                const productAvailability = availabilities[availabilityIndex].find(availability => availability.id === product.id.toUpperCase())
-
-                return {
-                    ...product,
-                    availability: productAvailability ? productAvailability.availability : 'FAILED'
-                }
-            })
-
-            setProducts(productsWithAvailability)
         }
 
         fetchProducts()
