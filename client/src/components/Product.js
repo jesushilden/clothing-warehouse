@@ -35,7 +35,7 @@ const Product = ({ product }) => {
                 <div>price: {product.price}€</div>
             </div>
             <div className='ProductAvailabilityColumn' style={{ backgroundColor: getAvailabilityColor(product.availability) }}>
-                {product.availability}
+                {product.availability || 'LOADING'}
             </div>
         </div>
     )
